@@ -1,0 +1,8 @@
+<mat-form-field>
+  <input matInput type="text" [(ngModel)]="newProject.name" placeholder="Name">
+</mat-form-field>
+
+<mat-dialog-actions>
+  <button mat-button type="submit" color="primary" [mat-dialog-close]='this.newProject'>Save</button>
+  <button mat-button type="button" color="primary" mat-dialog-close >Cancel</button>
+</mat-dialog-actions>

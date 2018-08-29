@@ -1,0 +1,43 @@
+<h1>Projects:</h1>
+<button mat-fab class="fab-button" (click)="onPush()"><mat-icon>add_alert</mat-icon></button>
+
+<a [routerLink]="['../todo/']" routerLinkActive="router-link-active" >
+   <button mat-button class="bottomleft dropbtn"> Tasks</button>
+</a>
+
+<table *ngIf="projects.length != 0;else noProjects">
+  <thead [ngClass]="['tableHead']">
+    <th (click)="sortProjects('name')" [ngClass]="['clickable']">
+      Name
+      <span [hidden]="sortType!=='name'" *ngIf="sortReverse"><mat-icon>arrow_drop_down</mat-icon></span>
+      <span [hidden]="sortType!=='name'" *ngIf="!sortReverse"><mat-icon>arrow_drop_up</mat-icon></span>
+    </th>
+    <th>
+      Delete
+    </th>
+    <th>
+      Edit
+    </th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let project of projects; let i = index" >
+      <td>
+        <a [routerLink]="['/project/',i]" routerLinkActive="router-link-active" >
+            <span>{{project.name}}</span>
+        </a>
+      </td>
+      <td>
+          <button mat-raised-button color="warn" (click)="deleteProject(project)">
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+      </td>
+      <td>
+          <button mat-raised-button color="accent" (click)="editProject(project)">
+            <mat-icon>edit</mat-icon>
+          </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #noProjects><h2>No projects</h2></ng-template>

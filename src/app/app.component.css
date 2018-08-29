@@ -1,0 +1,14 @@
+.fab-button{
+  background-color: red;
+  color: white;
+  right: 20px;
+  bottom: 20px;
+  position: fixed;
+}
+.strikethrough-text{
+  text-decoration: line-through;
+}
+
+.overdue-task{
+  color: red;
+}

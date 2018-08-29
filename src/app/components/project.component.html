@@ -1,0 +1,13 @@
+
+<div [ngClass]="'div-cls'">Name: {{this.project.name}}</div>
+<div [ngClass]="'div-cls'">Tasks:</div>
+<div *ngFor="let task of this.tasks; let i = index" [ngClass]="'div-cls'">
+  {{i+1}}:
+  <a  [routerLink]="['/todo/',this.tasksIds[i]]" routerLinkActive="router-link-active" >
+   {{task.name}}
+  </a>
+</div>
+
+<a [routerLink]="['/project']" routerLinkActive="router-link-active" >
+  <button mat-raised-button color="primary" > Go back </button>
+</a>

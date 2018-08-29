@@ -1,0 +1,56 @@
+.fab-button{
+  background-color: red;
+  color: white;
+  right: 20px;
+  bottom: 20px;
+  position: fixed;
+}
+
+table{
+  border-collapse: collapse;
+  min-width: 500px;
+}
+.tableHead {
+  border-bottom: 2px solid black;
+}
+
+.clickable{
+  cursor: pointer;
+}
+
+.strikethrough-text{
+  text-decoration: line-through;
+}
+
+.overdue-task{
+  color: red;
+}
+
+td { padding: 0.2em 1em; }
+th { text-align: center; }
+
+
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  display: inline-block;
+  font-size: 16px;
+}
+.bottomleft {
+    position: fixed;
+    bottom: 8px;
+    left: 16px;
+    font-size: 18px;
+}
+
+.red-background {
+  background: rgba(255, 0, 0, 0.5);
+}
+
+.green-background {
+  background: rgba(0, 255, 0, 0.5);
+}
+
+.yellow-background {
+  background: rgba(255, 255, 0, 0.5);
+}

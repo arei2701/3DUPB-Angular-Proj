@@ -1,0 +1,35 @@
+<mat-form-field>
+  <input matInput type="text" [(ngModel)]="newTodo.name" placeholder="Task Name">
+</mat-form-field>
+
+<mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="newTodo.dueDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field>
+      <textarea matInput type="text" [(ngModel)]="newTodo.description" placeholder="Task Description"></textarea>
+</mat-form-field>
+
+
+<mat-form-field>
+   <mat-select   placeholder = "Project" [(ngModel)]="newTodo.project">
+    <mat-option [value]="None">None</mat-option>
+    <mat-option *ngFor="let project of projects" [value]="project">{{project.name}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
+   <mat-select   placeholder = "Priority" [(ngModel)]="newTodo.priority">
+    <mat-option   [value]="'Low'">Low</mat-option>
+    <mat-option   [value]="'Mid'">Mid</mat-option>
+    <mat-option   [value]="'High'">High</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-dialog-actions>
+  <button mat-button type="submit" color="primary" [mat-dialog-close]='this.newTodo'>Save</button>
+  <button mat-button type="button" color="primary" mat-dialog-close >Cancel</button>
+</mat-dialog-actions>
+

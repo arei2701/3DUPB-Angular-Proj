@@ -1,0 +1,111 @@
+<h1>Todo List:</h1>
+
+<button mat-fab class="fab-button" (click)="onPush()"><mat-icon>add_alert</mat-icon></button>
+<table *ngIf="tasksToShow.length != 0;else noTodos">
+  <thead [ngClass]="['tableHead']">
+    <th (click)="sortTodos('done')" [ngClass]="['clickable']">
+      Done
+      <span [hidden]="sortType!=='done'" *ngIf="sortReverse"><mat-icon>arrow_drop_down</mat-icon></span>
+      <span [hidden]="sortType!=='done'" *ngIf="!sortReverse"><mat-icon>arrow_drop_up</mat-icon></span>
+    </th>
+    <th (click)="sortTodos('name')" [ngClass]="['clickable']">
+      Name
+      <span [hidden]="sortType!=='name'" *ngIf="sortReverse"><mat-icon>arrow_drop_down</mat-icon></span>
+      <span [hidden]="sortType!=='name'" *ngIf="!sortReverse"><mat-icon>arrow_drop_up</mat-icon></span>
+    </th>
+    <th (click)="sortTodos('project')" [ngClass]="['clickable']">
+      Project
+      <span [hidden]="sortType!=='project'" *ngIf="sortReverse"><mat-icon>arrow_drop_down</mat-icon></span>
+      <span [hidden]="sortType!=='project'" *ngIf="!sortReverse"><mat-icon>arrow_drop_up</mat-icon></span>
+    </th>
+    <th (click)="sortTodos('dueDate')" [ngClass]="['clickable']">
+      Due Date
+      <span [hidden]="sortType!=='dueDate'" *ngIf="sortReverse"><mat-icon>arrow_drop_down</mat-icon></span>
+      <span [hidden]="sortType!=='dueDate'" *ngIf="!sortReverse"><mat-icon>arrow_drop_up</mat-icon></span>
+    </th>
+    <th (click)="sortTodos('priority')" [ngClass]="['clickable']">
+      Priority
+      <span [hidden]="sortType!=='priority'" *ngIf="sortReverse"><mat-icon>arrow_drop_down</mat-icon></span>
+      <span [hidden]="sortType!=='priority'" *ngIf="!sortReverse"><mat-icon>arrow_drop_up</mat-icon></span>
+    </th>
+    <th>
+      Delete
+    </th>
+    <th>
+      Edit
+    </th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of tasksToShow; let i = index" >
+      <td>
+          <mat-checkbox (change)="saveTodos()" [(ngModel)]="task.isDone"></mat-checkbox>
+      </td>
+      <td>
+        <a [routerLink]="['/todo/',i]" routerLinkActive="router-link-active" >
+          <span [ngClass]="{'strikethrough-text': task.isDone}">{{task.name}}</span>
+        </a>
+      </td>
+       <td>
+        <span *ngIf="task.project;else no_proj">
+          <a [routerLink]="['/project/',task.projectId]" routerLinkActive="router-link-active" >
+            {{task.project.name}}
+          </a>
+        </span>
+        <ng-template #no_proj>None</ng-template>
+
+      </td>
+       <td>
+          <span [ngClass]="{'overdue-task': this.isTodoOverDue(task)}">{{task.dueDate|date}}</span>
+        </td>
+       <td [ngClass]="{'red-background': task.priority == 'High', 
+       'yellow-background': task.priority == 'Mid',
+       'green-background': task.priority == 'Low'}">
+          <span>{{task.priority}}</span>
+       </td>
+      <td>
+          <button mat-raised-button color="warn" (click)="deleteTodo(task)">
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+      </td>
+      <td>
+          <button mat-raised-button color="accent" (click)="onPush(task)">
+            <mat-icon>edit</mat-icon>
+          </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ng-template #noTodos><h2>No tasks</h2></ng-template>
+<span class="dropbtn">
+<button class="dropdown-button" mat-button [matMenuTriggerFor]="menu1">
+  Filters
+</button>
+</span>
+<mat-menu [overlapTrigger]="false" #menu1="matMenu" yPosition="below">
+  <button class="dropdown" mat-menu-item (click)="filterTodos('all')"> All </button>
+  <button class="dropdown" mat-menu-item [matMenuTriggerFor]="submenu1"> By date </button>
+  <button class="dropdown" mat-menu-item [matMenuTriggerFor]="submenu2"> By poject </button>
+  <button class="dropdown" mat-menu-item [matMenuTriggerFor]="submenu3"> By priority </button>
+</mat-menu>
+
+<mat-menu #submenu1="matMenu" yPosition="below">
+  <button class="dropdown" mat-menu-item (click)="filterTodos('overdue')"> Overdue </button>
+  <button class="dropdown" mat-menu-item (click)="filterTodos('today')"> Due today </button>
+  <button class="dropdown" mat-menu-item (click)="filterTodos('today')"> Future </button>
+</mat-menu>
+
+<mat-menu #submenu2="matMenu" yPosition="below">
+  <button class="dropdown" mat-menu-item (click)="filterTodos('project', '')"> None </button>
+  <button *ngFor="let project of this.projects" class="dropdown" mat-menu-item (click)="filterTodos('project', project.name)"> {{project.name}} </button>
+</mat-menu>
+
+<mat-menu #submenu3="matMenu" yPosition="below">
+  <button class="dropdown" mat-menu-item (click)="filterTodos('high')"> High </button>
+  <button class="dropdown" mat-menu-item (click)="filterTodos('mid')"> Medium </button>
+  <button class="dropdown" mat-menu-item (click)="filterTodos('low')"> Low </button>
+</mat-menu>
+
+
+<a [routerLink]="['../project/']" routerLinkActive="router-link-active" >
+   <button mat-button class="bottomleft dropbtn"> Projects</button>
+</a>
